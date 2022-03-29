@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+    "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!--classPathEntry:数据库的JDBC驱动,换成你自己的驱动位置  -->     <!--  要改的第一处: location  -->
+    <classPathEntry location="E:\useful_file\maven\maven_respository\mysql\mysql-connector-java\5.1.47\mysql-connector-java-5.1.47.jar" />
+
+    <!-- 一个数据库一个context -->
+    <!--defaultModelType="flat" 大数据字段，不分表 -->
+    <context id="MysqlTables" targetRuntime="MyBatis3" defaultModelType="flat">
+        <property name="autoDelimitKeywords" value="true"/>
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+        <property name="javaFileEncoding" value="utf-8"/>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+
+        <!-- 注释 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/><!-- 是否取消注释 -->
+            <property name="suppressDate" value="true"/> <!-- 是否生成注释代时间戳-->
+        </commentGenerator>
+
+        <!-- jdbc连接 -->                                            <!--  要改的第二处: connectionURL  userId  password  -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/review" userId="root"
+                        password=""/>
+        <!-- 类型转换 -->
+        <javaTypeResolver>
+            <!-- 是否使用bigDecimal， false可自动转化以下类型（Long, Integer, Short, etc.） -->
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 生成实体类地址 -->                                       <!--  要改的第三处: targetPackage -->
+        <javaModelGenerator targetPackage="com.review.loyee.bean2" targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!-- 生成mapper.xml文件 -->                                    <!--  要改的第四处: targetPackage -->
+        <sqlMapGenerator targetPackage="mapping2" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+        <!-- 生成mapper.xml对应client，也就是接口dao -->                <!--  要改的第五处: targetPackage -->
+        <javaClientGenerator targetPackage="com.review.loyee.mapper2" targetProject="src/main/java" type="XMLMAPPER">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+                                                                      <!--  要改的第六处: tableName domainObjectName -->
+        <table tableName="user" domainObjectName="User"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="true">
+        </table>
+
+        <!--<table tableName="competition" domainObjectName="Competition"-->
+        <!--enableCountByExample="false"-->
+        <!--enableUpdateByExample="false"-->
+        <!--enableDeleteByExample="false"-->
+        <!--enableSelectByExample="false"-->
+        <!--selectByExampleQueryId="true">-->
+
+        <!--
+            Terminal 命令:
+            mvn mybatis-generator:generate
+        -->
+                                                                      <!--  要改的第七处: 生成的 Mapper 文件加上 @Repository 注解 -->
+
+                                                                      <!--  要改的第八处: 更改 Mapping 文件中所有bean的引用路径
+                                                                            或者先拉 bean ,后拉 Mapper ,最后拉 Mapping 到新位置
+                                                                      -->
+
+
+
+    </context>
+</generatorConfiguration>
